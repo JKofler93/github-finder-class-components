@@ -27,7 +27,7 @@ const App = () => {
       setUsers(res.data.items)
       setLoading(false)
     }
-``
+
   // Get a single Github user
   const getUser = async username => {
       setLoading(true);
