@@ -1,48 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export class Search extends Component {
-    state = {
-        text: ''
-    };
+const Search = ({ searchUsers, showClear, clearUsers, setAlert}) => {
+    const [text, setText] = useState(''); 
 
-    static propTypes = {
-        searchUsers: PropTypes.func.isRequired,
-        clearUsers: PropTypes.func.isRequired,
-        showClear: PropTypes.bool.isRequired,
-        setAlert: PropTypes.func.isRequired
 
-    }
-
-    onSubmit = e => {
+    const onSubmit = e => {
         e.preventDefault();
-        if(this.state.text === '') {
-            this.props.setAlert('Please enter something', 'light');
+        if(text === '') {
+            setAlert('Please enter something', 'light');
         } else {
         // we want to send this value up to the app component as a prop. by using the function searchUsers
-        this.props.searchUsers(this.state.text);
-        this.setState({ text: '' });
+        searchUsers(text);
+        setText('');
         }
-    }
+    };
 
-    onChange = e => this.setState({ [e.target.name]: e.target.value });
+    const onChange = e => setText(e.target.value);
         // this uses the name key in the input field
 
 
-    render() {
-        const { showClear, clearUsers } = this.props;
         return (
             <div>
                 <form 
                     className="form"
-                    onSubmit={this.onSubmit}
+                    onSubmit={onSubmit}
                 >
                     <input 
                         type="text" 
                         name="text" 
-                        value={this.state.text} 
+                        value={text} 
                         placeholder="Search Users..." 
-                        onChange={this.onChange}  
+                        onChange={onChange}  
                     />
                     <input 
                         type="submit" 
@@ -60,7 +49,13 @@ export class Search extends Component {
                 )} 
             </div>
         )
-    }
 }
 
+Search.propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired,
+    setAlert: PropTypes.func.isRequired
+
+}
 export default Search
