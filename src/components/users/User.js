@@ -11,8 +11,8 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
     useEffect(() => {
         getUser(match.params.login);
         getUserRepos(match.params.login);
+        // the line below stops the error from happening in the console
         //eslint-disable-next-line
-        // the line above stops the error from happening in the console
     }, []);
 
         const { 
