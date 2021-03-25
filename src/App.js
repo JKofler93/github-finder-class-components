@@ -12,21 +12,9 @@ import GithubState from './context/github/GithubState';
 import './App.css';
 
 const App = () => {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
-
-
-  // Get a single Github user
-  const getUser = async username => {
-      setLoading(true);
-    
-      const res = await axios.get(`https://api.github.com/users/${username}?&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-      setUser(res.data)
-      setLoading(false);
-    }
 
     // Get single user reports
     const getUserRepos = async username => {
@@ -38,11 +26,6 @@ const App = () => {
       setLoading(false);
     }
 
-    // Clear Users from state
-    const clearUsers = () => {
-      setUsers([])
-      setLoading(false);
-    }
 
     // Set Alert for empty form
     const showAlert = (msg, type) => {
@@ -65,11 +48,9 @@ const App = () => {
                   render={ props => (
                   <Fragment>
                     <Search 
-                      clearUsers={clearUsers} 
-                      showClear={users.length > 0 ? true : false}
                       setAlert={showAlert}
                       />
-                    <Users loading={loading} users={users}/>
+                    <Users />
                   </Fragment>
                 )}
                 />
@@ -84,11 +65,8 @@ const App = () => {
                   render={props => (
                     <User 
                       {...props} 
-                      getUser={getUser} 
                       getUserRepos={getUserRepos}
                       repos={repos}
-                      user={user} 
-                      loading={loading}
                     />
                   )}
                 />
