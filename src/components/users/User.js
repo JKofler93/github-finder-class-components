@@ -1,16 +1,15 @@
 import React, { Fragment, useEffect, useContext } from 'react';
 import Spinner from '../layout/Spinner';
-import PropTypes from 'prop-types';
 import Repos from '../repos/Repos';
 import { Link } from 'react-router-dom';
 import GithubContext from '../../context/github/githubContext';
 
 
-const User = ({ getUserRepos, repos, match }) => {
+const User = ({ match }) => {
 
     const githubContext = useContext(GithubContext);
 
-    const { getUser, loading, user } = githubContext;
+    const { getUser, loading, user, getUserRepos, repos } = githubContext;
 
     // use this when you need to fetch data
     useEffect(() => {
@@ -91,8 +90,4 @@ const User = ({ getUserRepos, repos, match }) => {
         )
 }
 
-User.propTypes = {
-    repos: PropTypes.array.isRequired,
-    getUserRepos: PropTypes.func.isRequired
-}
 export default User
